@@ -1,5 +1,7 @@
 package org.boot.init;
 
+import org.boot.controller.LoginController;
+import org.boot.controller.ProjectController;
 import org.boot.controller.WelcomeController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +10,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackageClasses=WelcomeController.class)
+@ComponentScan(basePackageClasses = { WelcomeController.class, ProjectController.class, LoginController.class })
 public class SpringBootWebApplication extends SpringBootServletInitializer {
 
 	@Override
