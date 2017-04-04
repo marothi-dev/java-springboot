@@ -13,7 +13,18 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginController {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ModelAndView login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-		ModelAndView modelview = new ModelAndView();
-		return modelview;
+		ModelAndView modelView = null;
+		if (userForm.getUsername().isEmpty() || userForm.getPassword().isEmpty()) {
+			model.addAttribute("error", "Please enter login details");
+			modelView = new ModelAndView("welcome");
+			modelView.addObject("error", "Please enter login details");
+			modelView.addObject("error", "Please enter login details");
+			return modelView;
+		} else {
+
+			modelView = new ModelAndView("login");
+			modelView.addObject("user", userForm);
+			return modelView;
+		}
 	}
 }
