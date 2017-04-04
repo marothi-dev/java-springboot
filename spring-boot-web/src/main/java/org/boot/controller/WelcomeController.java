@@ -7,11 +7,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.boot.convert.TypeConverter;
+import org.boot.model.Project;
 import org.boot.model.User;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.type.TypeFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +43,7 @@ public class WelcomeController {
       Model model) {
 
     try {
-      URL url = new URL("http://userservice.staging.tangentmicroservices.com/api-explorer/");
+      URL url = new URL("http://projectservice.staging.tangentmicroservices.com:80/api/v1/projects/");
       HttpURLConnection conn = (HttpURLConnection) url.openConnection();
       conn.setRequestMethod("GET");
       conn.setRequestProperty("Accept", "application/json");
@@ -55,9 +60,8 @@ public class WelcomeController {
       while ((output = br.readLine()) != null) {
         System.out.println(output);
       }
-
-
-
+      TypeConverter<Project> converter = new TypeConverter<>(Project.class);
+      List<Project> list = converter.convert(output);
       conn.disconnect();
 
     } catch (IOException e) {
