@@ -12,8 +12,10 @@
         Spring boot will handle the resource mapping automcatically -->
 <link rel="stylesheet" type="text/css"
 	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!--
     <spring:url value="/css/main.css" var="springCss" />
     <link href="${springCss}" rel="stylesheet" />
@@ -54,26 +56,49 @@
 		<div class="starter-template">
 			<h1>Project List:</h1>
 			<c:if test="${not empty projects}">
-				<c:forEach items="${projects}" var="project">
+				<c:forEach items="${projects}" var="project" varStatus="loop">
 
 					<div class="panel-group">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
-									<a data-toggle="collapse" href="#collapse1">${project.title}
-										</a>
+									<a data-toggle="collapse" href="#collapse${loop.index}">${project.title}
+									</a>
 								</h4>
 							</div>
-							<div id="collapse1" class="panel-collapse collapse">
-								<div class="panel-body">Project Details: <br/>
-								${project.description} <br/>
-								Start Date: ${project.startDate} <br/>
-								End Date: ${project.endDate} <br/>
-								Billable: ${project.isBillable} <br/>
-								Active: ${project.isActive} <br/>
+							<div id="collapse${loop.index}" class="panel-collapse collapse">
+								<div class="panel-body">
+									Description: ${project.description} <br /> Start Date:
+									${project.start_date} <br /> End Date: ${project.end_date} <br />
+									Billable: ${project.is_billable} <br /> Active:
+									${project.is_active} <br />
 								</div>
-								<div class="panel-footer">Addtiona Information <br/>
-								
+								<div class="panel-footer">
+									<c:if test="${not empty project.task_set}">
+									Addtiona Information <br />
+										<br />
+										<br />
+										<br /> Task Set
+									<c:forEach items="${project.task_set}" var="task">
+								Title: ${task.title}   Due: ${task.due_date}  Est. Hrs:  ${task.estimated_hours} <br />
+								Project: ${task.project_data.title} <br />
+										</c:forEach>
+									</c:if>
+									<c:if test="${empty project.task_set}">
+										No Task Sets have been defined for this project yet.
+									</c:if>
+									<c:if test="${not empty project.resource_set}">
+										<br />
+										<br />
+										<br /> Resource
+									<c:forEach items="${project.resource_set}" var="resource">
+								User: ${resource.user}   Start: ${resource.start_date}  End:  ${resource.end_date} <br />
+								Rate: ${resource.rate}   Agreed Hrs/Month: ${resource.agreed_hours_per_month} <br />
+										</c:forEach>
+									</c:if>
+									<c:if test="${empty project.resource_set}">
+										No Resource has been assigned to this project yet.
+									</c:if>
 								</div>
 							</div>
 						</div>
