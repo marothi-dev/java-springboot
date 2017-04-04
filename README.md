@@ -6,3 +6,7 @@ Java and Spring Boot that demonstrates the following:
 ● Ability to build a login with authentication
 ● Ability to perform basic listing and viewing on the application using project service.
 Create a v
+
+
+
+to run the application user mvn spring-boot:run command
